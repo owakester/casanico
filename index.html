@@ -4,127 +4,173 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Casanico</title>
     <script src="https://unpkg.com/vue@3"></script>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <div id="principal" class="container mx-auto">
-
-      <div class="  grid-block" style="background-image: url('https://cdn.pixabay.com/photo/2017/06/20/17/15/wall-2423815_960_720.jpg'); width: 100%; height: 30vh; ">
-      
-     <h2 class="text-3xl text-center text-indigo-500"> Presupuesto</h2>
-        <div class="w-48">
-        <p class="text-center text-xl text-red-600">Casa Nico Materiales</p>
-       <p class="text-center">Presidente Peron 6699</p>
-       <p class="text-center">Tel: 44502666</p>
-       <img src="logo.png" alt="" class=" mx-auto h-24">
-      </div>
-       <div> 
-          
-          
-          
-    
-   
+      <div
+        class="grid-block"
+        style="
+          background-image: url('https://cdn.pixabay.com/photo/2017/06/20/17/15/wall-2423815_960_720.jpg');
+          width: 100%;
+          height: 30vh;
+        "
+      >
+        <h2 class="text-3xl text-center text-indigo-500">Presupuesto</h2>
+        <div class="w-48 mx-12">
+          <p class="text-center text-xl text-red-600">Casa Nico Materiales</p>
+          <p class="text-center">Presidente Peron 6699</p>
+          <p class="text-center">Tel: 44502666</p>
+          <img src="logo.png" alt="" class="mx-auto h-24" />
         </div>
+        <div></div>
 
-
-
-      <div id="listProduct" class="bg-indigo-100 grid grid-cols-4 p-8 mt-4 gap-2">
+        <hr />
         
-       
-          <div>Producto</div>
-        <div>Precio Unitario</div>
-        <div>Cantidad</div>
-        <div> </div>
-        <div class="border">
-          <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5  " id="firstInput" autofocus
-            v-model="inputProduct"
-            placeholder="ingrese producto"
-            type="text"
-          />
-
-          
-        </div>
-        <div class="border">
-          <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5  " v-model.number="inputPrecioUnit" type="text" />
-        </div>
-        <div class="border"><input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5  " v-on:keyup.enter="addProduct" v-model.number="inputCant" /></div>
-       <div><button @click="addProduct" class="bg-indigo-500 rounded text-white p-2 m-2 hover:bg-indigo-800 ">
-        Agregar
-      </button></div>
-      </div>
-
-      
-      <br />
-      <hr />
-
-      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-        <thead
-          class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        
+        <div
+          id="listProduct"
+          class="bg-gray-100 grid grid-cols-4 p-8 mt-4 gap-2"
         >
-          <tr>
-            <th scope="col" class="py-3 px-6">Producto</th>
-            <th scope="col" class="py-3 px-6">Precio Unitario</th>
-            <th scope="col" class="py-3 px-6">Cantidad</th>
-            <th scope="col" class="py-3 px-6">Total</th>
-            <th scope="col" class="py-3 px-6">Eliminar</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr
-            v-for="product in products"
-            class="bg-white border-b dark:bg-gray-200 dark:border-gray-700"
-          >
-            <th
-              scope="row"
-              class="py-1 px-6 font-medium text-gray-800 whitespace-nowrap"
+          <div>Producto</div>
+          <div>Precio Unitario</div>
+          <div>Cantidad</div>
+          <div></div>
+          <div class="border">
+            <input v-if=""
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5"
+              id="firstInput"
+              autofocus
+              v-model="inputProduct"
+              placeholder="ingrese producto"
+              type="text"
+            />
+          </div>
+          <div class="border">
+            <input
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5"
+              v-model.number="inputPrecioUnit"
+              type="text"
+            />
+          </div>
+          <div class="border">
+            <input
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5"
+              v-on:keyup.enter="addProduct"
+              v-model.number="inputCant"
+            />
+          </div>
+          <div>
+            <button
+              @click="addProduct"
+              class="bg-indigo-500 rounded text-white p-2 m-2 hover:bg-indigo-800"
             >
-              <input v-model="product.name" type="text" required />
-            </th>
-            <td class="py-1 px-6">
-              
-             <p> $ <input v-model="product.precioUnidad" type="text" required/></p>
-            </td>
-            <td class="py-1 px-6">
-              <input v-model="product.cantidad" type="number"required />
-            </td>
-            <td class="py-1 px-6">
-              $ {{product.cantidad * product.precioUnidad}}
-            </td>
+              Agregar
+            </button>
+          </div>
+        </div>
 
-            <td class="py-1 px-6">
-              <button @click="removeProduct(product)">
-                <img
-                  class="h-8 w-auto mx-auto"
-                  src="https://cdn-icons-png.flaticon.com/512/1632/1632602.png"
-                  alt=""
-                />
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div class="bg-indigo-100 rounded p-8 w-96 m-8">
-        <p>Total $ :{{sumarCantidad}}</p>
-      </div>
+        <br />
+        
+        <br />
+
+        <div v-if="inputProduct===null" class="bg-orange-100 border-l-4 border-orange-500 text-orange-700 p-4" role="alert">
+          <p class="font-bold">Planilla sin productos</p>
+          <p>Por favor agregar productos</p>
+        </div>
+
+        <div v-else="inputProduct!==null">
       
-      <button @click="ocultar" onclick="window.print()">
-     
-        <img src="https://cdn-icons.flaticon.com/png/512/2787/premium/2787698.png?token=exp=1658974828~hmac=91aa86d1d7ff23df2bedba91d784e8f9" class="mx-auto h-8" alt="">
-        <p>Imprimir</p>
-      </button>
-<!-- <button @click="datosFuntion" class="bg-green-300 rounded p-2">
+      
+          <table  id="mostrarProduct" class="mx-auto table-auto text-sm text-left text-gray-500">
+            <thead
+              class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700"
+            >
+              <tr>
+                <th scope="col" class="rounded-tl-lg py-3 px-12 text-center">
+                  Producto
+                </th>
+                <th scope="col" class="py-3 px-6 text-center">
+                  Precio Unitario
+                </th>
+                <th scope="col" class="py-3 px-6 text-center">Cantidad</th>
+                <th scope="col" class="py-3 px-6 text-center">Total</th>
+                <th scope="col" class="rounded-tr-lg py-3 px-6 text-center">
+                  Eliminar
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="product in products"
+                class="bg-white border border-gray-300"
+              >
+                <th
+                  scope="row"
+                  class="border border-gray-300 py-1 px-12 font-medium text-gray-800 whitespace-nowrap"
+                >
+                  <input   width="48" height="48" v-model="product.name" type="text" required />
+                </th>
+                <td class="py-1 border border-gray-300">
+                  <p>
+                   
+                    <input  
+                      v-model="product.precioUnidad"
+                      type="text"
+                      required
+                    />
+                  </p>
+                </td>
+                <td class="py-1 border border-gray-300">
+                  <input
+                    class="text-center"
+                    v-model="product.cantidad"
+                    type="number"
+                    required
+                  />
+                </td>
+                <td class="py-1 px-6">
+                   {{product.cantidad * product.precioUnidad}}
+                </td>
+
+                <td class="py-1 border border-gray-300">
+                  <button class="" @click="removeProduct(product)">
+                    <img
+                      class="h-8 mx-auto w-auto px-8"
+                      src="https://cdn-icons-png.flaticon.com/512/1632/1632602.png"
+                      alt=""
+                    />
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="bg-indigo-100 rounded p-8 w-96 m-8">
+          <p>Total: $ {{sumarCantidad}}</p>
+        </div>
+
+        <button @click="ocultar" onclick="window.print()">
+          <img
+            src="https://cdn-icons.flaticon.com/png/512/2787/premium/2787698.png?token=exp=1658974828~hmac=91aa86d1d7ff23df2bedba91d784e8f9"
+            class="mx-auto h-8"
+            alt=""
+          />
+          <p>Imprimir</p>
+        </button>
+        <!-- <button @click="datosFuntion" class="bg-green-300 rounded p-2">
   datos
 </button> -->
 
-<!-- <a href="https://wa.me/541135888672?text=Me%20interesa%20in%20el%20auto%20que%20vendes" style="font-size:20px;padding:5px 12px;border-radius:5px;background-color:#189D0E;color:white;text-shadow:none;"> ›› Mensaje de WhatsApp </a>
+        <!-- <a href="https://wa.me/541135888672?text=Me%20interesa%20in%20el%20auto%20que%20vendes" style="font-size:20px;padding:5px 12px;border-radius:5px;background-color:#189D0E;color:white;text-shadow:none;"> ›› Mensaje de WhatsApp </a>
  -->
+      </div>
 
-    </div>
+      <script src="https://cdn.tailwindcss.com"></script>
 
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <script src="app.js"></script>
+      <script src="app.js"></script>
     </div>
   </body>
 </html>

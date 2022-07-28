@@ -2,11 +2,11 @@ const app = Vue.createApp({
   data(datos) {
     return {
       products: [
-        /*  { name: "cemento", precioUnidad: 3000, cantidad: 5, total: 0 },
+         /*  { name: "cemento", precioUnidad: 300000, cantidad: 5, total: 0 },
         { name: "Arena" , precioUnidad: 2000, cantidad: 3, total: 0 },
-        { name: "Piedra", precioUnidad: 1200, cantidad: 6, total: 0 }, */
+        { name: "Piedra", precioUnidad: 1200, cantidad: 6, total: 0 },   */
       ],
-      inputProduct: "",
+      inputProduct: null,
       inputPrecioUnit: 0,
       inputCant: 0,
       precioTotal: 1,
@@ -20,7 +20,7 @@ const app = Vue.createApp({
       if (this.inputProduct==="") {
         alert("favor ingresar un valor")
       } else {
-         
+     /*    document.querySelector("#mostrarProduct").style.display = block; */
       this.products.push({
         name: this.inputProduct,
         precioUnidad: this.inputPrecioUnit,
@@ -33,6 +33,8 @@ const app = Vue.createApp({
       this.inputProduct = "";
       this.inputPrecioUnit = null;
       this.inputCant = null;
+
+   
       }
      
     },
