@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3"></script>
+  </head>
+  <body>
+    <div id="principal" class="container mx-auto">
+
+      <div class=" grid-block" style="background-image: url('https://cdn.pixabay.com/photo/2014/07/06/13/55/calculator-385506_960_720.jpg'); width: 100%; height: 15vh; ">
+
+     <h2 class="text-3xl text-center text-indigo-500">Generador de presupuestos</h2>
+
+      <div class="p-8  mt-8 grid grid-cols-4 gap-4">
+        
+        
+      </div>
+
+      <div id="listProduct" class="bg-indigo-100 grid grid-cols-4 p-8 gap-2">
+        
+       
+          <div>Producto</div>
+        <div>Precio Unitario</div>
+        <div>Cantidad</div>
+        <div> </div>
+        <div class="border">
+          <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5  " id="firstInput" autofocus
+            v-model="inputProduct"
+            placeholder="ingrese producto"
+            type="text"
+          />
+
+          
+        </div>
+        <div class="border">
+          <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5  " v-model.number="inputPrecioUnit" type="text" />
+        </div>
+        <div class="border"><input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5  " v-on:keyup.enter="addProduct" v-model.number="inputCant" /></div>
+       <div><button @click="addProduct" class="bg-indigo-500 rounded text-white p-2 m-2 hover:bg-indigo-800 ">
+        Agregar
+      </button></div>
+      </div>
+
+      
+      <br />
+      <hr />
+
+      <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+        <thead
+          class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400"
+        >
+          <tr>
+            <th scope="col" class="py-3 px-6">Producto</th>
+            <th scope="col" class="py-3 px-6">Precio Unitario</th>
+            <th scope="col" class="py-3 px-6">Cantidad</th>
+            <th scope="col" class="py-3 px-6">Total</th>
+            <th scope="col" class="py-3 px-6">Eliminar</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            v-for="product in products"
+            class="bg-white border-b dark:bg-gray-200 dark:border-gray-700"
+          >
+            <th
+              scope="row"
+              class="py-4 px-6 font-medium text-gray-800 whitespace-nowrap"
+            >
+              <input v-model="product.name" type="text" />
+            </th>
+            <td class="py-4 px-6">
+              
+              <input v-model="product.precioUnidad" type="text" />
+            </td>
+            <td class="py-4 px-6">
+              <input v-model="product.cantidad" type="number" />
+            </td>
+            <td class="py-4 px-6">
+              {{product.cantidad * product.precioUnidad}}
+            </td>
+
+            <td class="py-4 px-6">
+              <button @click="removeProduct(product)">
+                <img
+                  class="h-8 w-auto mx-auto"
+                  src="https://cdn-icons-png.flaticon.com/512/1632/1632602.png"
+                  alt=""
+                />
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="bg-indigo-100 rounded p-8 w-96 m-8">
+        <p>Total $ :{{sumarCantidad}}</p>
+      </div>
+      
+      <button @click="ocultar" onclick="window.print()">
+     
+        <img src="https://cdn-icons.flaticon.com/png/512/2787/premium/2787698.png?token=exp=1658974828~hmac=91aa86d1d7ff23df2bedba91d784e8f9" class="mx-auto h-8" alt="">
+        <p>Imprimir</p>
+      </button>
+<button @click="datosFuntion" class="bg-green-300 rounded p-2">
+  datos
+</button>
+
+<a href="https://wa.me/541135888672?text=Me%20interesa%20in%20el%20auto%20que%20vendes" style="font-size:20px;padding:5px 12px;border-radius:5px;background-color:#189D0E;color:white;text-shadow:none;"> ›› Mensaje de WhatsApp </a>
+
+
+    </div>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="app.js"></script>
+  </body>
+</html>
