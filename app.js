@@ -15,6 +15,12 @@ const app = Vue.createApp({
 
   methods: {
     addProduct() {
+     
+      
+      if (this.inputProduct==="") {
+        alert("favor ingresar un valor")
+      } else {
+         
       this.products.push({
         name: this.inputProduct,
         precioUnidad: this.inputPrecioUnit,
@@ -27,6 +33,8 @@ const app = Vue.createApp({
       this.inputProduct = "";
       this.inputPrecioUnit = null;
       this.inputCant = null;
+      }
+     
     },
 
     removeProduct(element) {

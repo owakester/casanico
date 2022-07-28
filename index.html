@@ -10,16 +10,26 @@
   <body>
     <div id="principal" class="container mx-auto">
 
-      <div class=" grid-block" style="background-image: url('https://cdn.pixabay.com/photo/2014/07/06/13/55/calculator-385506_960_720.jpg'); width: 100%; height: 15vh; ">
-
-     <h2 class="text-3xl text-center text-indigo-500">Generador de presupuestos</h2>
-
-      <div class="p-8  mt-8 grid grid-cols-4 gap-4">
-        
-        
+      <div class="  grid-block" style="background-image: url('https://cdn.pixabay.com/photo/2017/06/20/17/15/wall-2423815_960_720.jpg'); width: 100%; height: 30vh; ">
+      
+     <h2 class="text-3xl text-center text-indigo-500"> Presupuesto</h2>
+        <div class="w-48">
+        <p class="text-center text-xl text-red-600">Casa Nico Materiales</p>
+       <p class="text-center">Presidente Peron 6699</p>
+       <p class="text-center">Tel: 44502666</p>
+       <img src="logo.png" alt="" class=" mx-auto h-24">
       </div>
+       <div> 
+          
+          
+          
+    
+   
+        </div>
 
-      <div id="listProduct" class="bg-indigo-100 grid grid-cols-4 p-8 gap-2">
+
+
+      <div id="listProduct" class="bg-indigo-100 grid grid-cols-4 p-8 mt-4 gap-2">
         
        
           <div>Producto</div>
@@ -67,22 +77,22 @@
           >
             <th
               scope="row"
-              class="py-4 px-6 font-medium text-gray-800 whitespace-nowrap"
+              class="py-1 px-6 font-medium text-gray-800 whitespace-nowrap"
             >
-              <input v-model="product.name" type="text" />
+              <input v-model="product.name" type="text" required />
             </th>
-            <td class="py-4 px-6">
+            <td class="py-1 px-6">
               
-              <input v-model="product.precioUnidad" type="text" />
+             <p> $ <input v-model="product.precioUnidad" type="text" required/></p>
             </td>
-            <td class="py-4 px-6">
-              <input v-model="product.cantidad" type="number" />
+            <td class="py-1 px-6">
+              <input v-model="product.cantidad" type="number"required />
             </td>
-            <td class="py-4 px-6">
-              {{product.cantidad * product.precioUnidad}}
+            <td class="py-1 px-6">
+              $ {{product.cantidad * product.precioUnidad}}
             </td>
 
-            <td class="py-4 px-6">
+            <td class="py-1 px-6">
               <button @click="removeProduct(product)">
                 <img
                   class="h-8 w-auto mx-auto"
@@ -115,5 +125,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script src="app.js"></script>
+    </div>
   </body>
 </html>
