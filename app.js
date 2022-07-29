@@ -10,29 +10,36 @@ const app = Vue.createApp({
       inputPrecioUnit: 0,
       inputCant: 0,
       precioTotal: 1,
+  
     };
   },
 
   methods: {
-    addProduct() {
-     
+    addProduct(select) {
+    
       
       if (this.inputProduct==="") {
         alert("favor ingresar un valor")
       } else {
      /*    document.querySelector("#mostrarProduct").style.display = block; */
       this.products.push({
+       
         name: this.inputProduct,
         precioUnidad: this.inputPrecioUnit,
         cantidad: this.inputCant,
         total: this.inputPrecioUnit * this.inputCant,
       });
 
-      console.log(this.products);
+
       document.getElementById("firstInput").focus();
       this.inputProduct = "";
       this.inputPrecioUnit = null;
       this.inputCant = null;
+
+      
+     localStorage.setItem('presupuesto',JSON.stringify(this.products))
+
+   
 
    
       }
@@ -40,13 +47,20 @@ const app = Vue.createApp({
     },
 
     removeProduct(element) {
-      console.log(element.name);
+     ;
       /* this.products.pop({ element }); */
 
       this.products = this.products.filter(
         (curso) => curso.name !== element.name
       );
     },
+
+    removeAll() {
+
+      this.products=[]
+      localStorage.clear();
+     },
+
 
     ocultar() {
       /* dato=document.querySelector("#listProduct")
@@ -79,6 +93,19 @@ padre.removeChild(dato) */
       console.log(articulos.Producto);
     },
   },
+
+
+created: function(){
+let datosDB=JSON.parse( localStorage.getItem('presupuesto'))
+
+if (datosDB===null){
+  this.products=[]
+}else{
+  
+this.products=datosDB
+}
+},
+
 
   computed: {
     sumarCantidad() {
