@@ -11,7 +11,8 @@ const app = Vue.createApp({
       inputCant: null,
       precioTotal: 1,
       id:0,
-  
+      fecha : new Date(Date.now())
+      
     };
   },
 
