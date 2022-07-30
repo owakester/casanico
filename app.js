@@ -10,6 +10,7 @@ const app = Vue.createApp({
       inputPrecioUnit: null,
       inputCant: null,
       precioTotal: 1,
+      id:0,
   
     };
   },
@@ -28,6 +29,7 @@ const app = Vue.createApp({
         precioUnidad: this.inputPrecioUnit,
         cantidad: this.inputCant,
         total: this.inputPrecioUnit * this.inputCant,
+        id:this.id++
       });
 
 
@@ -49,9 +51,9 @@ const app = Vue.createApp({
     removeProduct(element) {
      ;
       /* this.products.pop({ element }); */
-
+console.log(element)
       this.products = this.products.filter(
-        (curso) => curso.name !== element.name
+        (curso) => curso.id !== element.id
       );
     },
 
