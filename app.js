@@ -7,8 +7,8 @@ const app = Vue.createApp({
         { name: "Piedra", precioUnidad: 1200, cantidad: 6, total: 0 },   */
       ],
       inputProduct: null,
-      inputPrecioUnit: 0,
-      inputCant: 0,
+      inputPrecioUnit: null,
+      inputCant: null,
       precioTotal: 1,
   
     };
@@ -18,13 +18,13 @@ const app = Vue.createApp({
     addProduct(select) {
     
       
-      if (this.inputProduct==="") {
+      if (this.inputProduct===null) {
         alert("favor ingresar un valor")
       } else {
      /*    document.querySelector("#mostrarProduct").style.display = block; */
       this.products.push({
        
-        name: this.inputProduct,
+        name: this.inputProduct.toUpperCase(),
         precioUnidad: this.inputPrecioUnit,
         cantidad: this.inputCant,
         total: this.inputPrecioUnit * this.inputCant,
