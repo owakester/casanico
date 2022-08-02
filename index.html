@@ -20,13 +20,13 @@
       >
         <h2 class="text-3xl text-center text-indigo-500">Presupuesto</h2>
         
-        <div class="w-48 mx-12">
+        <div class="w-48 mx-6">
           <img src="logo.png" alt="" class="mx-auto h-20" />
 
           <p class="text-center text-xl text-red-600">Casa Nico Materiales</p>
           <p class="text-center text-sm">Presidente Peron 6699</p>
           <p class="text-center text-sm ">Tel: 44502666</p>
-          <p class="text-center">Fecha: {{fecha.toLocaleDateString()}}</p>
+          <p class="text-center text-sm">Fecha: {{fecha.toLocaleDateString()}}</p>
         </div>
         <div></div>
 
@@ -41,7 +41,7 @@
           <div>Precio Unitario</div>
           <div>Cantidad</div>
           <div></div>
-          <div class="border">
+          <div class="">
             <input 
               class="hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5"
               id="firstInput"
@@ -51,14 +51,14 @@
               type="text"
             />
           </div>
-          <div class="border">
+          <div class="">
             <input
               class="hover:bg-indigo-50  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5"
               v-model.number="inputPrecioUnit"
               type="text"
             />
           </div>
-          <div class="border">
+          <div class="">
             <input
               class="hover:bg-indigo-50  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5"
               v-on:keyup.enter="addProduct"
@@ -79,9 +79,11 @@
         
         <br />
 
-        <div v-if="inputProduct===null" class="bg-orange-100 border-l-4  w-96  mx-auto border-orange-500 text-orange-700 p-4" role="alert">
-          <p class="font-bold">Planilla sin productos</p>
-          <p>Por favor agregar productos</p>
+        <div v-if="inputProduct===null" class="grid grid-cols-2  bg-orange-100 border-l-4  w-80  mx-auto border-orange-500 text-orange-700 p-4" role="alert">
+          <img class="h-12 m-auto" src="https://cdn-icons.flaticon.com/png/512/3746/premium/3746978.png?token=exp=1659201436~hmac=7439433c542fb174dbc2d080ee266e13" alt="">
+          <div><p class="font-bold">Planilla sin productos</p>
+            <p>Por favor agregar productos</p></div>
+          
         </div>
 
         <div v-else="inputProduct!==null">
@@ -92,11 +94,12 @@
               class="text-xs text-gray-700 uppercase bg-gray-200 "
             >
               <tr>
+                
                 <th scope="col" class="rounded-tl-lg py-3 px-12 text-center">
                   Producto
                 </th>
                 <th scope="col" class="py-3 px-6 text-center">
-                  Precio Unidad
+                 V unitario
                 </th>
                 <th scope="col" class="py-3 px-6 text-center">Cantidad</th>
                 <th scope="col" class="py-3 px-6 text-center">Total</th>
@@ -107,28 +110,28 @@
             </thead>
             <tbody>
               <tr
-                v-for="product in products"
+                v-for="product in products" :key="product.id"
                 class="bg-white border border-gray-300"
               >
                 <th
                   scope="row"
-                  class=" hover:border-indigo-300 border border-gray-300  font-medium text-gray-800 whitespace-nowrap"
+                  class="px-2 hover:border-indigo-300 border border-gray-300  font-medium text-gray-800 whitespace-nowrap"
                 >
                   <input    v-model="product.name" type="text" required />
                   
                 </th>
-                <td class=" hover:border-indigo-300  border border-gray-300">
-                  <p>
+                <td class=" px-2 hover:border-indigo-300  border border-gray-300">
+                  
                    
-                    <input  
+                    <input 
                       v-model="product.precioUnidad"
                       type="number"
                       required
                     />
-                  </p>
+                  
                 </td>
                 <td class=" hover:border-indigo-300 border border-gray-300">
-                  <input
+                  <input  style="width:50px"
                     class="text-center mx-4"
                     v-model="product.cantidad"
                     type="number"
@@ -152,8 +155,8 @@
             </tbody>
           </table>
         </div>
-        <div class="bg-indigo-50 rounded p-8 w-80 m-8">
-          <p class="text-xl text-indigo-600 text-center"><span class=" text-2xl">Total: $</span>  {{sumarCantidad}}</p>
+        <div class="bg-indigo-50 rounded shadow-sm p-2 w-48 m-4">
+          <p class="text-xl text-center text-indigo-600 "><span class=" text-2xl">Total: $</span>  {{sumarCantidad}}</p>
         </div>
 
         <button class="bg-gray-50 shadow-sm p-2 rounded m-2 hover:bg-indigo-50" @click="ocultar" onclick="window.print()">
@@ -165,7 +168,7 @@
           <p>Imprimir</p>
         </button>
 
-        <button @click="removeAll" class="bg-gray-50 shadow-sm hover:bg-indigo-50  p-2 rounded">
+        <button @click="removeAll" class="bg-gray-50 shadow-sm hover:bg-indigo-50  p-1 rounded">
           <img
             src="https://cdn-icons-png.flaticon.com/512/3221/3221897.png"
             class="mx-auto h-7"
