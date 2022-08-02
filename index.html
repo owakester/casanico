@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Casanico</title>
     <script src="https://unpkg.com/vue@3"></script>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="awesomplete.base.css" />
+    <link rel="stylesheet" href="awesomplete.theme.css" />
   </head>
   <body>
     <div id="principal" class="container mx-auto">
@@ -19,20 +21,19 @@
         "
       >
         <h2 class="text-3xl text-center text-indigo-500">Presupuesto</h2>
-        
+
         <div class="w-48 mx-6">
           <img src="logo.png" alt="" class="mx-auto h-20" />
 
           <p class="text-center text-xl text-red-600">Casa Nico Materiales</p>
           <p class="text-center text-sm">Presidente Peron 6699</p>
-          <p class="text-center text-sm ">Tel: 44502666</p>
-          <p class="text-center text-sm">Fecha: {{fecha.toLocaleDateString()}}</p>
+          <p class="text-center text-sm">Tel: 44502666</p>
+          <p class="text-center text-sm">
+            Fecha: {{fecha.toLocaleDateString()}}
+          </p>
         </div>
         <div></div>
 
-
-        
-        
         <div
           id="listProduct"
           class="bg-gray-100 grid grid-cols-4 p-8 mt-4 gap-2"
@@ -42,25 +43,90 @@
           <div>Cantidad</div>
           <div></div>
           <div class="">
-            <input 
-              class="hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5"
+            <input
+              class="awesomplete hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5"
               id="firstInput"
-              autofocus
-              v-model="inputProduct"
+              v-model.lazy="inputProduct"
               placeholder="ingrese producto"
+              autofocus
               type="text"
+              list="mylist"
+              autocomplete="off"
             />
+            <datalist id="mylist">
+              <option>Bolsa Arena</option>
+              <option>Arena (Suelto)</option>
+              <option>Arena (Bolson)</option>
+              <option>1/2 de Arena(suelto)</option>
+              <option>Cascote (Suelto)</option>
+              <option>Cascote (Bolson)</option>
+              <option>1/2 Cascote</option>
+              <option value="">Piedra 6-20 (Suelta)</option>
+              <option value="">Piedra (Bolson)</option>
+              <option value="">1/2 de Piedra</option>
+              <option value="">Bolsa Piedra</option>
+              <option value="">Cemento</option>
+              <option value="">Cemento Blanco</option>
+              <option value="">Plasticor (Hidralit)</option>
+              <option value="">Cal Hidrat</option>
+              <option value="">Cal MILAGRO</option>
+              <option value="">Yeso Tuyango</option>
+              <option value="">revoque fino a la cal In/ext</option>
+              <option value="">Pegamento</option>
+              <option value="">Pegamento Weber</option>
+              <option value="">perfecto porcelanato</option>
+              <option value="">Pastinas</option>
+              <option value="">ferrite chisplast</option>
+              <option value="">VIGAS DE 1,8 A 3,0</option>
+              <option value="">VIGAS DE 3,20 A 3,8</option>
+              <option value="">VIGAS DE 4,0 A 4,2</option>
+              <option value="">VIGAS DE 4,4 A 4,6</option>
+              <option value="">VIGAS DE 4,8 A 5,4</option>
+              <option value="">VIGAS DE 5,6 A 6,4</option>
+              <option value="">VIGAS DE 6,6 A 7,2</option>
+              <option value="">Tierra refractaria</option>
+              <option value="">Tejuela</option>
+              <option value="">Ladrillo Hueco 8x18x33</option>
+              <option value="">Ladrillo Hueco 12x18x33 6T</option>
+              <option value="">Ladrillo Hueco 12x18x33 9T</option>
+              <option value="">Ladrillo Hueco 18x18x33 12T</option>
+              <option value="">Portante 12x19x33</option>
+              <option value="">Portante 18x19x33</option>
+              <option value="">Cerecita</option>
+              <option value="">tacurú</option>
+              <option value="">Hierro aletado 4.2</option>
+              <option value="">Hierro Aletado 5.5</option>
+              <option value="">Hierro aletado 6</option>
+              <option value="">Hierro aletado 8</option>
+              <option value="">Hierro aletado 10</option>
+              <option value="">Hierro aletado 12</option>
+              <option value="">Hierro aletado 16</option>
+              <option value="">Hierro aletado 20</option>
+              <option value="">Hierro aletado 25</option>
+              <option value="">Malla 4,2-15x15(5x2)</option>
+              <option value="">malla 4,2-15x15(2x5)</option>
+              <option value="">Malla 4,2-15x25(5x2)</option>
+              <option value="">malla 6-15x25(2x5)</option>
+              <option value="">Malla 6-15x15(6x2)</option>
+              <option value="">Clavos 2"</option>
+              <option value="">Clavos 2 1/2"</option>
+              <option value="">Alambre de fardo</option>
+              <option value="">Eternit x 500 I bicapa</option>
+              <option value="">Pintura Asfaltica</option>
+              <option value="">Plancha Telgopor x20mm</option>
+              <option value="">Plancha Telgopor x10mm</option>
+            </datalist>
           </div>
           <div class="">
             <input
-              class="hover:bg-indigo-50  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5"
+              class="hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5"
               v-model.number="inputPrecioUnit"
               type="text"
             />
           </div>
           <div class="">
             <input
-              class="hover:bg-indigo-50  bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5"
+              class="hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5"
               v-on:keyup.enter="addProduct"
               v-model.number="inputCant"
             />
@@ -76,31 +142,36 @@
         </div>
 
         <br />
-        
+
         <br />
 
-        <div v-if="inputProduct===null" class="grid grid-cols-2  bg-orange-100 border-l-4  w-80  mx-auto border-orange-500 text-orange-700 p-4" role="alert">
-          <img class="h-12 m-auto" src="https://cdn-icons.flaticon.com/png/512/3746/premium/3746978.png?token=exp=1659201436~hmac=7439433c542fb174dbc2d080ee266e13" alt="">
-          <div><p class="font-bold">Planilla sin productos</p>
-            <p>Por favor agregar productos</p></div>
-          
+        <div
+          v-if="inputProduct===null"
+          class="grid grid-cols-2 bg-orange-100 border-l-4 w-80 mx-auto border-orange-500 text-orange-700 p-4"
+          role="alert"
+        >
+          <img
+            class="h-12 m-auto"
+            src="https://cdn-icons.flaticon.com/png/512/3746/premium/3746978.png?token=exp=1659201436~hmac=7439433c542fb174dbc2d080ee266e13"
+            alt=""
+          />
+          <div>
+            <p class="font-bold">Planilla sin productos</p>
+            <p>Por favor agregar productos</p>
+          </div>
         </div>
 
         <div v-else="inputProduct!==null">
-      
-      
-          <table  id="mostrarProduct" class="shadow-sm mx-auto table-auto text-sm text-left text-gray-500">
-            <thead
-              class="text-xs text-gray-700 uppercase bg-gray-200 "
-            >
+          <table
+            id="mostrarProduct"
+            class="shadow-sm mx-auto table-auto text-sm text-left text-gray-500"
+          >
+            <thead class="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
-                
                 <th scope="col" class="rounded-tl-lg py-3 px-12 text-center">
                   Producto
                 </th>
-                <th scope="col" class="py-3 px-6 text-center">
-                 V unitario
-                </th>
+                <th scope="col" class="py-3 px-6 text-center">V unitario</th>
                 <th scope="col" class="py-3 px-6 text-center">Cantidad</th>
                 <th scope="col" class="py-3 px-6 text-center">Total</th>
                 <th scope="col" class="rounded-tr-lg py-3 px-6 text-center">
@@ -110,39 +181,39 @@
             </thead>
             <tbody>
               <tr
-                v-for="product in products" :key="product.id"
+                v-for="product in products"
+                :key="product.id"
                 class="bg-white border border-gray-300"
               >
                 <th
                   scope="row"
-                  class="px-2 hover:border-indigo-300 border border-gray-300  font-medium text-gray-800 whitespace-nowrap"
+                  class="px-2 hover:border-indigo-300 border border-gray-300 font-medium text-gray-800 whitespace-nowrap"
                 >
-                  <input    v-model="product.name" type="text" required />
-                  
+                  <input v-model="product.name" type="text" required />
                 </th>
-                <td class=" px-2 hover:border-indigo-300  border border-gray-300">
-                  
-                   
-                    <input 
-                      v-model="product.precioUnidad"
-                      type="number"
-                      required
-                    />
-                  
+                <td class="px-2 hover:border-indigo-300 border border-gray-300">
+                  <input
+                    v-model="product.precioUnidad"
+                    type="number"
+                    required
+                  />
                 </td>
-                <td class=" hover:border-indigo-300 border border-gray-300">
-                  <input  style="width:50px"
+                <td class="hover:border-indigo-300 border border-gray-300">
+                  <input
+                    style="width: 50px"
                     class="text-center mx-4"
                     v-model="product.cantidad"
                     type="number"
                     required
                   />
                 </td>
-                <td class=" border border-gray-300 hover:border-indigo-300 py px-6">
-                   {{product.cantidad * product.precioUnidad}}
+                <td
+                  class="border border-gray-300 hover:border-indigo-300 py px-6"
+                >
+                  {{product.cantidad * product.precioUnidad}}
                 </td>
 
-                <td class="hover:border-indigo-300  border border-gray-300">
+                <td class="hover:border-indigo-300 border border-gray-300">
                   <button class="" @click="removeProduct(product)">
                     <img
                       class="h-8 mx-auto w-auto px-8 sudo"
@@ -156,10 +227,16 @@
           </table>
         </div>
         <div class="bg-indigo-50 rounded shadow-sm p-2 w-48 m-4">
-          <p class="text-xl text-center text-indigo-600 "><span class=" text-2xl">Total: $</span>  {{sumarCantidad}}</p>
+          <p class="text-xl text-center text-indigo-600">
+            <span class="text-2xl">Total: $</span> {{sumarCantidad}}
+          </p>
         </div>
 
-        <button class="bg-gray-50 shadow-sm p-2 rounded m-2 hover:bg-indigo-50" @click="ocultar" onclick="window.print()">
+        <button
+          class="bg-gray-50 shadow-sm p-2 rounded m-2 hover:bg-indigo-50"
+          @click="ocultar"
+          onclick="window.print()"
+        >
           <img
             src="https://cdn-icons-png.flaticon.com/512/1497/1497695.png"
             class="mx-auto h-7"
@@ -168,14 +245,17 @@
           <p>Imprimir</p>
         </button>
 
-        <button @click="removeAll" class="bg-gray-50 shadow-sm hover:bg-indigo-50  p-1 rounded">
+        <button
+          @click="removeAll"
+          class="bg-gray-50 shadow-sm hover:bg-indigo-50 p-1 rounded"
+        >
           <img
             src="https://cdn-icons-png.flaticon.com/512/3221/3221897.png"
             class="mx-auto h-7"
             alt=""
           />
-         
-          Vaciar  
+
+          Vaciar
         </button>
         <!-- <button @click="datosFuntion" class="bg-green-300 rounded p-2">
   datos
@@ -186,7 +266,7 @@
       </div>
 
       <script src="https://cdn.tailwindcss.com"></script>
-
+      <script type="text/javascript" src="awesomplete.min.js"></script>
       <script src="app.js"></script>
     </div>
   </body>

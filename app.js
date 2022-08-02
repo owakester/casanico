@@ -16,6 +16,9 @@ const app = Vue.createApp({
     };
   },
 
+
+
+  
   methods: {
     addProduct(select) {
     
@@ -34,11 +37,18 @@ const app = Vue.createApp({
       });
 
 
-      document.getElementById("firstInput").focus();
       this.inputProduct = "";
+      setTimeout(() => {
+        document.getElementById("firstInput").focus(); 
+
+      }, 1000);
+      
+     
+      /* document.querySelector("#firstInput").innerHTML = ""; */
+
+
       this.inputPrecioUnit = null;
       this.inputCant = null;
-
       
      localStorage.setItem('presupuesto',JSON.stringify(this.products))
 
@@ -50,8 +60,8 @@ const app = Vue.createApp({
     },
 
     removeProduct(element) {
-     ;
-      /* this.products.pop({ element }); */
+   
+
 console.log(element)
       this.products = this.products.filter(
         (curso) => curso.id !== element.id
