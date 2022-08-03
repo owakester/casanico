@@ -36,7 +36,7 @@
 
         <div
           id="listProduct"
-          class="bg-gray-100 grid grid-cols-4 p-8 mt-4 gap-2"
+          class="oculto-impresion bg-gray-100 grid grid-cols-4 p-8 mt-4 gap-2 mx-auto"
         >
           <div>Producto</div>
           <div>Precio Unitario</div>
@@ -44,14 +44,14 @@
           <div></div>
           <div class="">
             <input
-              class="awesomplete hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5"
+              class="awesomplete hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block p-2.5"
               id="firstInput"
               v-model.lazy="inputProduct"
               placeholder="ingrese producto"
               autofocus
               type="text"
               list="mylist"
-              autocomplete="off"
+            
             />
             <datalist id="mylist">
               <option>Bolsa Arena</option>
@@ -119,14 +119,14 @@
           </div>
           <div class="">
             <input
-              class="hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5"
+              class="hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block p-2.5"
               v-model.number="inputPrecioUnit"
               type="text"
             />
           </div>
           <div class="">
             <input
-              class="hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block w-full p-2.5"
+              class="hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block  p-2.5"
               v-on:keyup.enter="addProduct"
               v-model.number="inputCant"
             />
@@ -174,7 +174,7 @@
                 <th scope="col" class="py-3 px-6 text-center">V unitario</th>
                 <th scope="col" class="py-3 px-6 text-center">Cantidad</th>
                 <th scope="col" class="py-3 px-6 text-center">Total</th>
-                <th scope="col" class="rounded-tr-lg py-3 px-6 text-center">
+                <th  scope="col" class="oculto-impresion rounded-tr-lg py-3 px-6 text-center">
                   Eliminar
                 </th>
               </tr>
@@ -185,14 +185,14 @@
                 :key="product.id"
                 class="bg-white border border-gray-300"
               >
-                <th
+                <th style="width: 250px"
                   scope="row"
                   class="px-2 hover:border-indigo-300 border border-gray-300 font-medium text-gray-800 whitespace-nowrap"
                 >
-                  <input v-model="product.name" type="text" required />
+                  <input  style="width: 250px"  v-model="product.name" type="text" required />
                 </th>
                 <td class="px-2 hover:border-indigo-300 border border-gray-300">
-                  <input
+                  <input class="text-center"
                     v-model="product.precioUnidad"
                     type="number"
                     required
@@ -213,10 +213,10 @@
                   {{product.cantidad * product.precioUnidad}}
                 </td>
 
-                <td class="hover:border-indigo-300 border border-gray-300">
-                  <button class="" @click="removeProduct(product)">
-                    <img
-                      class="h-8 mx-auto w-auto px-8 sudo"
+                <td  class=" hover:border-indigo-300 border border-gray-300">
+                  <button  class="" @click="removeProduct(product)">
+                    <img id=""
+                      class="oculto-impresion h-8 mx-auto w-auto px-8 sudo"
                       src="https://cdn-icons-png.flaticon.com/512/1632/1632602.png"
                       alt=""
                     />
@@ -234,7 +234,7 @@
 
         <button
           class="bg-gray-50 shadow-sm p-2 rounded m-2 hover:bg-indigo-50"
-          @click="ocultar"
+        
           onclick="window.print()"
         >
           <img

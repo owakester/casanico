@@ -75,16 +75,6 @@ console.log(element)
      },
 
 
-    ocultar() {
-      /* dato=document.querySelector("#listProduct")
-padre=dato.parentNode;
-padre.removeChild(dato) */
-      document.querySelector("#listProduct").style.display = "none";
-
-      setTimeout(() => {
-        document.querySelector("#listProduct").style.display = "";
-      }, 3000);
-    },
 
     datosFuntion() {
       const url =
