@@ -32,7 +32,31 @@
             Fecha: {{fecha.toLocaleDateString()}}
           </p>
         </div>
-        <div></div>
+
+        <button
+          id="btnShow"
+          @click="hideClients"
+          class="oculto-impresion bg-indigo-500 text-gray-100 m-8 rounded p-2"
+        >
+          + Datos
+        </button>
+        <div class="hidden oculto-impresion" id="showClients">
+          <div class="bg-gray-100 p-4 rounded grid gap-4 grid-cols-3">
+            <div>
+              <label for="">Cliente</label>
+              <input v-model="nameClient" type="text" />
+            </div>
+
+            <div>
+              <label for="">Telefono</label>
+              <input v-model="telClient" type="number" />
+            </div>
+            <div>
+              <label for="">Direccion</label>
+              <input v-model="addressClient" type="text" />
+            </div>
+          </div>
+        </div>
 
         <div
           id="listProduct"
@@ -51,7 +75,6 @@
               autofocus
               type="text"
               list="mylist"
-            
             />
             <datalist id="mylist">
               <option>Bolsa Arena</option>
@@ -126,7 +149,7 @@
           </div>
           <div class="">
             <input
-              class="hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block  p-2.5"
+              class="hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block p-2.5"
               v-on:keyup.enter="addProduct"
               v-model.number="inputCant"
             />
@@ -146,22 +169,29 @@
         <br />
 
         <div
-          v-if="inputProduct===null"
-          class="grid grid-cols-2 bg-orange-100 border-l-4 w-80 mx-auto border-orange-500 text-orange-700 p-4"
+          v-if="inputProduct===null && datosDB===null"
+          class="grid grid-cols-2 bg-orange-100 border-l-4 w-80 mx-auto border-orange-500 text-orange-700 p-2"
           role="alert"
         >
           <img
-            class="h-12 m-auto"
-            src="https://cdn-icons.flaticon.com/png/512/3746/premium/3746978.png?token=exp=1659201436~hmac=7439433c542fb174dbc2d080ee266e13"
+            class="h-20 m-auto"
+            src="https://cdn-icons.flaticon.com/png/512/3746/premium/3746978.png?token=exp=1659977967~hmac=326a044e25930cb9deff55ce8f54a7b4"
             alt=""
           />
           <div>
-            <p class="font-bold">Planilla sin productos</p>
-            <p>Por favor agregar productos</p>
+            <p class="font-bold text-center">Planilla sin productos</p>
+            <p>Vaciar lista anterior antes de iniciar</p>
           </div>
         </div>
 
-        <div v-else="inputProduct!==null">
+        <div>
+          <div v-if="nameClient!==null" class="bg-gray-100 w-96 rounded p-4">
+            <!--        <p><strong>Nombre:</strong> {{products[0].infoClient[0]}}</p> -->
+            <p class="uppercase"><strong>Nombre:</strong> {{nameClient }}</p class="uppercase">
+            <p class="uppercase"><strong>Telefono:</strong> {{telClient }}</p>
+            <p class="uppercase"><strong>Direccion:</strong> {{addressClient }}</p>
+          </div>
+
           <table
             id="mostrarProduct"
             class="shadow-sm mx-auto table-auto text-sm text-left text-gray-500"
@@ -174,7 +204,10 @@
                 <th scope="col" class="py-3 px-6 text-center">V unitario</th>
                 <th scope="col" class="py-3 px-6 text-center">Cantidad</th>
                 <th scope="col" class="py-3 px-6 text-center">Total</th>
-                <th  scope="col" class="oculto-impresion rounded-tr-lg py-3 px-6 text-center">
+                <th
+                  scope="col"
+                  class="oculto-impresion rounded-tr-lg py-3 px-6 text-center"
+                >
                   Eliminar
                 </th>
               </tr>
@@ -185,14 +218,21 @@
                 :key="product.id"
                 class="bg-white border border-gray-300"
               >
-                <th style="width: 250px"
+                <th
+                  style="width: 250px"
                   scope="row"
                   class="px-2 hover:border-indigo-300 border border-gray-300 font-medium text-gray-800 whitespace-nowrap"
                 >
-                  <input  style="width: 250px"  v-model="product.name" type="text" required />
+                  <input
+                    style="width: 250px"
+                    v-model="product.name"
+                    type="text"
+                    required
+                  />
                 </th>
                 <td class="px-2 hover:border-indigo-300 border border-gray-300">
-                  <input class="text-center"
+                  <input
+                    class="text-center"
                     v-model="product.precioUnidad"
                     type="number"
                     required
@@ -213,9 +253,10 @@
                   {{product.cantidad * product.precioUnidad}}
                 </td>
 
-                <td  class=" hover:border-indigo-300 border border-gray-300">
-                  <button  class="" @click="removeProduct(product)">
-                    <img id=""
+                <td class="hover:border-indigo-300 border border-gray-300">
+                  <button class="" @click="removeProduct(product)">
+                    <img
+                      id=""
                       class="oculto-impresion h-8 mx-auto w-auto px-8 sudo"
                       src="https://cdn-icons-png.flaticon.com/512/1632/1632602.png"
                       alt=""
@@ -234,7 +275,6 @@
 
         <button
           class="bg-gray-50 shadow-sm p-2 rounded m-2 hover:bg-indigo-50"
-        
           onclick="window.print()"
         >
           <img
