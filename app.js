@@ -13,12 +13,13 @@ const app = Vue.createApp({
       nameClient: null,
       telClient: null,
       addressClient: "",
+      datosDB:null,
     };
   },
 
   methods: {
     addProduct(select) {
-      if (this.inputProduct === null || this.inputProduct === "") {
+      if (this.inputProduct === null || this.inputProduct === "" ) {
         alert("favor ingresar un valor");
       } else {
         console.log(this.products);
@@ -88,12 +89,12 @@ const app = Vue.createApp({
   },
 
   created: function () {
-    let datosDB = JSON.parse(localStorage.getItem("presupuesto"));
+     this.datosDB = JSON.parse(localStorage.getItem("presupuesto"));
 
-    if (datosDB === null) {
+    if ( this.datosDB === null) {
       this.products = [];
     } else {
-      this.products = datosDB;
+      this.products =  this.datosDB;
     }
   },
 
