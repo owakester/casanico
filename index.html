@@ -188,9 +188,10 @@
             <p class="uppercase"><strong>Direccion:</strong> {{addressClient }}</p>
           </div>
 
+        <div style="overflow-x:auto;">
           <table
             id="mostrarProduct"
-            class="shadow-sm mx-auto table-auto text-sm text-left text-gray-500"
+            class="shadow-sm mx-auto  text-sm text-left text-gray-500"
           >
             <thead class="text-xs text-gray-700 uppercase bg-gray-200">
               <tr>
@@ -215,12 +216,12 @@
                 class="bg-white border border-gray-300"
               >
                 <th
-                  style="width: 250px"
+                
                   scope="row"
                   class="px-2 hover:border-indigo-300 border border-gray-300 font-medium text-gray-800 whitespace-nowrap"
                 >
                   <input
-                    style="width: 250px"
+                   
                     v-model="product.name"
                     type="text"
                     required
@@ -262,8 +263,8 @@
               </tr>
             </tbody>
           </table>
+        </div>
 
-          
         </div>
         <div class="bg-indigo-50 rounded shadow-sm p-2 w-48 m-4">
           <p class="text-xl text-center text-indigo-600">

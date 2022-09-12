@@ -4,4 +4,18 @@
     }
   }
 
+  @media only screen 
+  and (max-width : 360px) {
+  /* Styles here */
 
+  
+
+  td{
+    background: #000;
+    width: 10%;
+  }
+
+  input{
+    width: 40%;
+  }
+}
