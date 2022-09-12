@@ -60,13 +60,14 @@
 
         <div
           id="listProduct"
-          class="oculto-impresion bg-gray-100 grid grid-cols-4 p-8 mt-4 gap-2 mx-auto"
+          class="oculto-impresion bg-gray-100 grid grid-cols-2  md:grid-cols-4 sm:grid-cols-2 p-8 mt-4  gap-2 mx-auto"
         >
-          <div>Producto</div>
+         <!--  <div>Producto</div>
           <div>Precio Unitario</div>
           <div>Cantidad</div>
-          <div></div>
-          <div class="">
+          <div></div> -->
+          <div id="infoProduct" class="">
+           <p>Producto</p>
             <input
               class="awesomplete hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block p-2.5"
               id="firstInput"
@@ -141,17 +142,21 @@
             </datalist>
           </div>
           <div class="">
+            <p>Precio</p>
             <input
               class="hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block p-2.5"
               v-model.number="inputPrecioUnit"
+              placeholder="$"
               type="text"
             />
           </div>
           <div class="">
+            <p>Cantidad</p>
             <input
               class="hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 block p-2.5"
               v-on:keyup.enter="addProduct"
               v-model.number="inputCant"
+              placeholder="#"
             />
           </div>
           <div>
