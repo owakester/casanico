@@ -1,9 +1,7 @@
 const app = Vue.createApp({
   data(datos) {
     return {
-      products: [
-     
-      ],
+      products: [],
       inputProduct: null,
       inputPrecioUnit: null,
       inputCant: null,
@@ -13,7 +11,11 @@ const app = Vue.createApp({
       nameClient: null,
       telClient: null,
       addressClient: "",
-      datosDB:null,
+      datosDB: null,
+      // Nuevas propiedades para el historial
+      budgetHistory: [],
+      showHistory: false,
+      budgetName: "",
     };
   },
 
@@ -41,41 +43,111 @@ const app = Vue.createApp({
         this.inputCant = null;
 
         localStorage.setItem("presupuesto", JSON.stringify(this.products));
-
-
       }
     },
 
     removeProduct(element) {
       console.log(element);
       this.products = this.products.filter((curso) => curso.id !== element.id);
+      localStorage.setItem("presupuesto", JSON.stringify(this.products));
     },
 
     removeAll() {
       this.products = [];
+      this.nameClient = null;
+      this.telClient = null;
+      this.addressClient = "";
       localStorage.clear();
     },
 
-   /*  datosFuntion() {
-      const url =
-        "https://script.googleusercontent.com/macros/echo?user_content_key=vnHuywflHe_zQofXqN3BUPCJnsdJP3B23mpAdv_0tjJDcKK3KiW2DmPbhppgRug3RtD2yK0QR5HFmYw3ZMXsT16Hut-jaHC9m5_BxDlH2jW0nuo2oDemN9CCS2h10ox_1xSncGQajx_ryfhECjZEnNp7Wvz1S9DlOpYU-m7C4Af5uiiWsECooCstuXwhaamhlA1k8_lGmEnjiOFDwZjmmibMYSZXCy_C6ooBgau1i-yuB1F9lqGT7dz9Jw9Md8uu&lib=MFK4xC7y3sT0GDrArtd8YFwhvTfcvbrpA";
+    // Nuevos métodos para el historial
+    saveBudgetToHistory() {
+      if (this.products.length === 0) {
+        alert("No hay productos para guardar en el historial");
+        return;
+      }
 
-      fetch(url)
-        .then((respuesta) => respuesta.json()) //Si encuentra la URl
-
-        .then((datos) => this.mostrarDatos(datos));
-    },
-
-    mostrarDatos(datos) {
-      let articulos = {
-        Id: datos.data[0].id,
-        Producto: datos.data[0].producto,
-        Medida: datos.data[0].medida,
-        Precio: datos.data[0].precio,
+      const budgetName = this.budgetName || `Presupuesto ${this.nameClient || 'Sin nombre'}`;
+      
+      const budget = {
+        id: Date.now(), // ID único basado en timestamp
+        name: budgetName,
+        date: new Date().toISOString(),
+        client: {
+          name: this.nameClient || "",
+          phone: this.telClient || "",
+          address: this.addressClient || ""
+        },
+        products: JSON.parse(JSON.stringify(this.products)), // Deep copy
+        total: this.sumarCantidad
       };
-      console.log(articulos.Producto);
+
+      this.budgetHistory.push(budget);
+      this.saveBudgetHistoryToStorage();
+      
+      this.budgetName = ""; // Limpiar el nombre del presupuesto
+      alert("Presupuesto guardado en el historial");
     },
- */
+
+    loadBudgetFromHistory(budget) {
+      // Cargar los datos del presupuesto seleccionado
+      this.products = JSON.parse(JSON.stringify(budget.products)); // Deep copy
+      this.nameClient = budget.client.name;
+      this.telClient = budget.client.phone;
+      this.addressClient = budget.client.address;
+      
+      // Actualizar el ID para nuevos productos
+      this.id = Math.max(...this.products.map(p => p.id), 0) + 1;
+      
+      // Guardar en localStorage
+      localStorage.setItem("presupuesto", JSON.stringify(this.products));
+      
+      // Cerrar el historial
+      this.showHistory = false;
+      
+      alert(`Presupuesto "${budget.name}" cargado`);
+    },
+
+    deleteBudgetFromHistory(budgetId) {
+      if (confirm("¿Estás seguro de que quieres eliminar este presupuesto del historial?")) {
+        this.budgetHistory = this.budgetHistory.filter(budget => budget.id !== budgetId);
+        this.saveBudgetHistoryToStorage();
+      }
+    },
+
+    saveBudgetHistoryToStorage() {
+      localStorage.setItem("budgetHistory", JSON.stringify(this.budgetHistory));
+    },
+
+    loadBudgetHistoryFromStorage() {
+      const historyData = localStorage.getItem("budgetHistory");
+      if (historyData) {
+        this.budgetHistory = JSON.parse(historyData);
+      }
+    },
+
+    toggleHistory() {
+      this.showHistory = !this.showHistory;
+    },
+
+    formatDate(dateString) {
+      const date = new Date(dateString);
+      return date.toLocaleDateString('es-ES', {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+    },
+
+    formatCurrency(amount) {
+      return new Intl.NumberFormat('es-AR', {
+        style: 'currency',
+        currency: 'ARS'
+      }).format(amount);
+    },
+
     hideClients() {
       let x = document.getElementById("showClients");
       if (x.style.display === "none") {
@@ -89,13 +161,17 @@ const app = Vue.createApp({
   },
 
   created: function () {
-     this.datosDB = JSON.parse(localStorage.getItem("presupuesto"));
-
-    if ( this.datosDB === null) {
+    // Cargar presupuesto actual
+    this.datosDB = JSON.parse(localStorage.getItem("presupuesto"));
+    if (this.datosDB === null) {
       this.products = [];
     } else {
-      this.products =  this.datosDB;
+      this.products = this.datosDB;
+      this.id = Math.max(...this.products.map(p => p.id), 0) + 1;
     }
+
+    // Cargar historial de presupuestos
+    this.loadBudgetHistoryFromStorage();
   },
 
   computed: {

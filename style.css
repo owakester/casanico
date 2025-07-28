@@ -8,12 +8,77 @@
   and (max-width : 360px) {
   /* Styles here */
 
-  
-
   td{
     background: #000;
     width: 10%;
   }
+}
 
- 
+/* Estilos adicionales para el historial */
+.history-modal {
+  backdrop-filter: blur(5px);
+}
+
+.history-item {
+  transition: all 0.2s ease;
+}
+
+.history-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.budget-card {
+  border-left: 4px solid #6366f1;
+}
+
+.budget-card:hover {
+  border-left-color: #4f46e5;
+}
+
+/* Animación para el modal */
+.modal-enter-active, .modal-leave-active {
+  transition: opacity 0.3s;
+}
+
+.modal-enter-from, .modal-leave-to {
+  opacity: 0;
+}
+
+/* Mejoras en los botones */
+.btn-history {
+  transition: all 0.2s ease;
+}
+
+.btn-history:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para la sección de guardar */
+.save-section {
+  background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+  border: 1px solid #d1d5db;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .history-modal .bg-white {
+    margin: 1rem;
+    max-height: 80vh;
+  }
+  
+  .budget-card {
+    padding: 1rem;
+  }
+  
+  .budget-card .flex {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .budget-card .flex .flex {
+    flex-direction: row;
+    justify-content: flex-end;
+  }
 }

@@ -22,24 +22,35 @@
       >
         <h2 class="text-3xl text-center text-indigo-500">Presupuesto</h2>
 
-        <div class="w-48 mx-6">
-          <img src="logo.png" alt="" class="mx-auto h-20" />
+   <div class="w-96 mx-6">
+  <img src="logo.png" alt="" class="h-20" /> <!-- Eliminado mx-auto -->
+  
+  <!-- <p class="text-xl text-red-600">Casa Nico Materiales</p> -->
+  <p class="text-sm">Juan Agustín García 373 Ituzaingó</p>
+  <p class="text-sm">Tel: 1559710595 - 1551618709</p>
+  <p class="text-sm">
+    Fecha: {{fecha.toLocaleDateString()}}
+  </p>
+</div>
 
-          <p class="text-center text-xl text-red-600">Casa Nico Materiales</p>
-          <p class="text-center text-sm">Presidente Peron 6699</p>
-          <p class="text-center text-sm">Tel: 44502666</p>
-          <p class="text-center text-sm">
-            Fecha: {{fecha.toLocaleDateString()}}
-          </p>
+        <!-- Botones de control -->
+        <div class="oculto-impresion flex flex-wrap gap-2 justify-center mb-4">
+          <button
+            id="btnShow"
+            @click="hideClients"
+            class="bg-indigo-500 text-gray-100 rounded p-2 hover:bg-indigo-600"
+          >
+            + Datos
+          </button>
+          
+          <button
+            @click="toggleHistory"
+            class="bg-green-500 text-gray-100 rounded p-2 hover:bg-green-600"
+          >
+            📋 Historial
+          </button>
         </div>
 
-        <button
-          id="btnShow"
-          @click="hideClients"
-          class="oculto-impresion bg-indigo-500 text-gray-100 m-8 rounded p-2"
-        >
-          + Datos
-        </button>
         <div class="hidden oculto-impresion" id="showClients">
           <div class="bg-gray-100 p-4 rounded grid gap-4 grid-cols-3">
             <div>
@@ -49,11 +60,60 @@
 
             <div>
               <label for="">Telefono: </label>
-              <input class=" hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500  p-2.5" v-model="telClient" type="text"  v-model="telClient" type="text" />
+              <input class=" hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500  p-2.5" v-model="telClient" type="text" />
             </div>
             <div>
               <label for="">Direccion: </label>
-              <input class=" hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500  p-2.5" v-model="addressClient" type="text"  v-model="addressClient" type="text" />
+              <input class=" hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500  p-2.5" v-model="addressClient" type="text" />
+            </div>
+          </div>
+        </div>
+
+        <!-- Modal del Historial -->
+        <div v-if="showHistory" class="oculto-impresion fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div class="bg-white rounded-lg p-6 max-w-4xl w-full max-h-96 overflow-y-auto mx-4">
+            <div class="flex justify-between items-center mb-4">
+              <h3 class="text-xl font-bold text-indigo-600">Historial de Presupuestos</h3>
+              <button @click="toggleHistory" class="text-gray-500 hover:text-gray-700">
+                <span class="text-2xl">&times;</span>
+              </button>
+            </div>
+            
+            <!-- Lista de presupuestos del historial -->
+            <div v-if="budgetHistory.length === 0" class="text-center text-gray-500 py-8">
+              No hay presupuestos guardados en el historial
+            </div>
+            
+            <div v-else class="space-y-3">
+              <div 
+                v-for="budget in budgetHistory.slice().reverse()" 
+                :key="budget.id"
+                class="border border-gray-300 rounded-lg p-4 hover:bg-gray-50"
+              >
+                <div class="flex justify-between items-start">
+                  <div class="flex-1">
+                    <h4 class="font-semibold text-gray-800">{{budget.name}}</h4>
+                    <p class="text-sm text-gray-600">Cliente: {{budget.client.name || 'Sin especificar'}}</p>
+                    <p class="text-sm text-gray-600">Fecha: {{formatDate(budget.date)}}</p>
+                    <p class="text-sm text-gray-600">Productos: {{budget.products.length}}</p>
+                    <p class="text-lg font-bold text-indigo-600">Total: {{formatCurrency(budget.total)}}</p>
+                  </div>
+                  <div class="flex gap-2">
+                    <button 
+                      @click="loadBudgetFromHistory(budget)"
+                      class="bg-blue-500 text-white px-3 py-1 rounded text-sm hover:bg-blue-600"
+                    >
+                      Cargar
+                    </button>
+                    <button 
+                      @click="deleteBudgetFromHistory(budget.id)"
+                      class="bg-red-500 text-white px-3 py-1 rounded text-sm hover:bg-red-600"
+                    >
+                      Eliminar
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -62,10 +122,6 @@
           id="listProduct"
           class="oculto-impresion bg-gray-100 grid grid-cols-3  md:grid-cols-4 sm:grid-cols-3 p-8 mt-4  gap-2 mx-auto"
         >
-         <!--  <div>Producto</div>
-          <div>Precio Unitario</div>
-          <div>Cantidad</div>
-          <div></div> -->
           <div id="infoProduct" class="">
            <p>Producto</p>
             <input
@@ -77,69 +133,80 @@
               type="text"
               list="mylist"
             />
-            <datalist id="mylist">
-              <option>Bolsa Arena</option>
-              <option>Arena (Suelto)</option>
-              <option>Arena (Bolson)</option>
-              <option>1/2 de Arena(suelto)</option>
-              <option>Cascote (Suelto)</option>
-              <option>Cascote (Bolson)</option>
-              <option>1/2 Cascote</option>
-              <option value="">Piedra 6-20 (Suelta)</option>
-              <option value="">Piedra (Bolson)</option>
-              <option value="">1/2 de Piedra</option>
-              <option value="">Bolsa Piedra</option>
-              <option value="">Cemento</option>
-              <option value="">Cemento Blanco</option>
-              <option value="">Plasticor (Hidralit)</option>
-              <option value="">Cal Hidrat</option>
-              <option value="">Cal MILAGRO</option>
-              <option value="">Yeso Tuyango</option>
-              <option value="">revoque fino a la cal In/ext</option>
-              <option value="">Pegamento</option>
-              <option value="">Pegamento Weber</option>
-              <option value="">perfecto porcelanato</option>
-              <option value="">Pastinas</option>
-              <option value="">ferrite chisplast</option>
-              <option value="">VIGAS DE 1,8 A 3,0</option>
-              <option value="">VIGAS DE 3,20 A 3,8</option>
-              <option value="">VIGAS DE 4,0 A 4,2</option>
-              <option value="">VIGAS DE 4,4 A 4,6</option>
-              <option value="">VIGAS DE 4,8 A 5,4</option>
-              <option value="">VIGAS DE 5,6 A 6,4</option>
-              <option value="">VIGAS DE 6,6 A 7,2</option>
-              <option value="">Tierra refractaria</option>
-              <option value="">Tejuela</option>
-              <option value="">Ladrillo Hueco 8x18x33</option>
-              <option value="">Ladrillo Hueco 12x18x33 6T</option>
-              <option value="">Ladrillo Hueco 12x18x33 9T</option>
-              <option value="">Ladrillo Hueco 18x18x33 12T</option>
-              <option value="">Portante 12x19x33</option>
-              <option value="">Portante 18x19x33</option>
-              <option value="">Cerecita</option>
-              <option value="">tacurú</option>
-              <option value="">Hierro aletado 4.2</option>
-              <option value="">Hierro Aletado 5.5</option>
-              <option value="">Hierro aletado 6</option>
-              <option value="">Hierro aletado 8</option>
-              <option value="">Hierro aletado 10</option>
-              <option value="">Hierro aletado 12</option>
-              <option value="">Hierro aletado 16</option>
-              <option value="">Hierro aletado 20</option>
-              <option value="">Hierro aletado 25</option>
-              <option value="">Malla 4,2-15x15(5x2)</option>
-              <option value="">malla 4,2-15x15(2x5)</option>
-              <option value="">Malla 4,2-15x25(5x2)</option>
-              <option value="">malla 6-15x25(2x5)</option>
-              <option value="">Malla 6-15x15(6x2)</option>
-              <option value="">Clavos 2"</option>
-              <option value="">Clavos 2 1/2"</option>
-              <option value="">Alambre de fardo</option>
-              <option value="">Eternit x 500 I bicapa</option>
-              <option value="">Pintura Asfaltica</option>
-              <option value="">Plancha Telgopor x20mm</option>
-              <option value="">Plancha Telgopor x10mm</option>
-            </datalist>
+             <datalist id="mylist">
+                <option>Bolsa Arena</option>
+                <option>Arena (Suelto)</option>
+                <option>Arena (Bolson)</option>
+                <option>1/2 de Arena(suelto)</option>
+                <option>Cascote (Suelto)</option>
+                <option>Cascote (Bolson)</option>
+                <option>1/2 Cascote</option>
+                <option>Piedra 6-20 (Suelta)</option>
+                <option>Piedra (Bolson)</option>
+                <option>1/2 de Piedra</option>
+                <option>Bolsa Piedra</option>
+                <option>bloque telgopor techo No.10</option>
+                <option>molido de telgopor x 150 Lt</option>
+                <option>Cemento x25kg</option>
+                <option>Cemento x50kg</option>
+                <option>Hidrofugo x 1kg</option>
+                <option>Hidrofugo x 4kg</option>
+                <option>Hidrofugo x 10kg</option>
+                <option>Hidrofugo x 20kg</option>
+                <option>Hidrofugo x 200kg</option>
+                <option>Cemento Blanco</option>
+                <option>Plasticor - Hidralit x40kg</option>
+                <option>Plasticor - Hidralit x20kg</option>
+                <option>Cal Hidrat</option>
+                <option>Seña pallet cemento</option>
+                <option>Cal MILAGRO</option>
+                <option>tacuru x 1kg</option>
+                <option>tacuru x 4kg</option>
+                <option>tacuru x 10kg</option>
+                <option>tacuru x 20kg</option>
+                <option>Seña bolson reintegro</option>
+                <option>Yeso Tuyango</option>
+                <option>revoque fino a la cal In/ext</option>
+                <option>Pegamento</option>
+                <option>Pegamento Weber</option>
+                <option>perfecto porcelanato</option>
+                <option>Pastinas</option>
+                <option>ferrite chisplast</option>
+                <option>VIGAS DE 1,8 A 3,0</option>
+                <option>VIGAS DE 3,20 A 3,8</option>
+                <option>VIGAS DE 4,0 A 4,2</option>
+                <option>VIGAS DE 4,4 A 4,6</option>
+                <option>VIGAS DE 4,8 A 5,4</option>
+                <option>VIGAS DE 5,6 A 6,4</option>
+                <option>VIGAS DE 6,6 A 7,2</option>
+                <option>Tierra refractaria</option>
+                <option>Tejuela</option>
+                <option>Ladrillo Hueco 8x18x33</option>
+                <option>Ladrillo Hueco 12x18x33 6T</option>
+                <option>Ladrillo Hueco 12x18x33 9T</option>
+                <option>Ladrillo Hueco 18x18x33 12T</option>
+                <option>Portante 12x19x33</option>
+                <option>Portante 18x19x33</option>
+                <option>Cerecita</option>
+                <option>tacurú</option>
+                <option>Hierro aletado 4.2</option>
+                <option>Hierro Aletado 5.5</option>
+                <option>Hierro aletado 6</option>
+                <option>Hierro aletado 8</option>
+                <option>Hierro aletado 10</option>
+                <option>Hierro aletado 12</option>
+                <option>Hierro aletado 16</option>
+                <option>Hierro aletado 20</option>
+                <option>Hierro aletado 25</option>
+                <option>Malla 4,2-15x15(5x2)</option>
+                <option>malla 4,2-15x15(2x5)</option>
+                <option>Malla 6-15x15(6x2)</option>
+                <option>Clavos 2"</option>
+                <option>Clavos 2 1/2"</option>
+                <option>Alambre de fardo</option>
+                <option>Eternit x 500 I bicapa</option>
+                <option>Pintura Asfaltica</option>
+              </datalist>
           </div>
           <div class="">
             <p>Precio</p>
@@ -176,14 +243,11 @@
        <div class="grid grid-cols-2 w-64 m-4 mx-auto " v-if="products.length===0">
         <img class="w-20" src="https://cdn-icons-png.flaticon.com/512/5900/5900076.png" alt="">
         <p class="text-center text-indigo-600 align-middle text-2xl">Planilla sin productos</p>
-        
-        
        </div>
 
         <div>
           <div v-if="nameClient!==null" class="bg-gray-100 w-96 rounded p-4">
-            <!--        <p><strong>Nombre:</strong> {{products[0].infoClient[0]}}</p> -->
-            <p class="uppercase"><strong>Nombre:</strong> {{nameClient }}</p class="uppercase">
+            <p class="uppercase"><strong>Nombre:</strong> {{nameClient }}</p>
             <p class="uppercase"><strong>Telefono:</strong> {{telClient }}</p>
             <p class="uppercase"><strong>Direccion:</strong> {{addressClient }}</p>
           </div>
@@ -216,12 +280,10 @@
                 class="bg-white border border-gray-300"
               >
                 <th
-                
                   scope="row"
                   class="px-2 hover:border-indigo-300 border border-gray-300 font-medium text-gray-800 whitespace-nowrap"
                 >
                   <input
-                   
                     v-model="product.name"
                     type="text"
                     required
@@ -266,42 +328,59 @@
         </div>
 
         </div>
+        
         <div class="bg-indigo-50 rounded shadow-sm p-2 w-48 m-4">
           <p class="text-xl text-center text-indigo-600">
             <span class="text-2xl">Total: $</span> {{sumarCantidad}}
           </p>
         </div>
 
-        <button
-          class="bg-gray-50 shadow-sm p-2 rounded m-2 hover:bg-indigo-50"
-          onclick="window.print()"
-        >
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/1497/1497695.png"
-            class="mx-auto h-7"
-            alt=""
-          />
-          <p>Imprimir</p>
-        </button>
+        <!-- Sección para guardar en historial -->
+        <div v-if="products.length > 0" class="oculto-impresion bg-gray-100 p-4 rounded m-4 max-w-md mx-auto">
+          <h4 class="text-lg font-semibold text-gray-700 mb-2">Guardar en Historial</h4>
+          <div class="flex gap-2">
+            <input 
+              v-model="budgetName"
+              type="text" 
+              placeholder="Nombre del presupuesto (opcional)"
+              class="flex-1 hover:bg-indigo-50 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 p-2.5"
+            >
+            <button
+              @click="saveBudgetToHistory"
+              class="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
+            >
+              💾 Guardar
+            </button>
+          </div>
+        </div>
 
-        <button
-          @click="removeAll"
-          class="bg-gray-50 shadow-sm hover:bg-indigo-50 p-1 rounded"
-        >
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/3221/3221897.png"
-            class="mx-auto h-7"
-            alt=""
-          />
+        <!-- Botones de acción -->
+        <div class="flex flex-wrap gap-4 justify-center">
+          <button
+            class="bg-gray-50 shadow-sm p-2 rounded m-2 hover:bg-indigo-50"
+            onclick="window.print()"
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/1497/1497695.png"
+              class="mx-auto h-7"
+              alt=""
+            />
+            <p>Imprimir</p>
+          </button>
 
-          Vaciar
-        </button>
-        <!-- <button @click="datosFuntion" class="bg-green-300 rounded p-2">
-  datos
-</button> -->
+          <button
+            @click="removeAll"
+            class="bg-gray-50 shadow-sm hover:bg-indigo-50 p-1 rounded"
+          >
+            <img
+              src="https://cdn-icons-png.flaticon.com/512/3221/3221897.png"
+              class="mx-auto h-7"
+              alt=""
+            />
+            Vaciar
+          </button>
+        </div>
 
-        <!-- <a href="https://wa.me/541135888672?text=Me%20interesa%20in%20el%20auto%20que%20vendes" style="font-size:20px;padding:5px 12px;border-radius:5px;background-color:#189D0E;color:white;text-shadow:none;"> ›› Mensaje de WhatsApp </a>
- -->
       </div>
 
       <script src="https://cdn.tailwindcss.com"></script>
